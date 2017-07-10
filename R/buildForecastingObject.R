@@ -1,5 +1,5 @@
 
-buildForecastingObject <- function(dfTrain, dfForecast, yName, initialDescription = ""){
+buildForecastingObject <- function(dfTrain, dfForecast, yName, initialDescription = c("")){
 #first two arguments can be string paths or dataframes (which is recommended)
 
     if(class(dfTrain)=="character"){
