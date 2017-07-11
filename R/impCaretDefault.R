@@ -1,4 +1,4 @@
-impCaretDefault <- function(fo, modelName = "rf", trainControl = NULL, variableAutoselection = F, forbiddenVariables = c()){
+impCaretDefault <- function(fo, modelName = "rf", trainControl = NULL, variableAutoselection = F, variablesToImpute = c(),forbiddenVariables = c()){
   require(caret)
 
   if(class(fo) != "ForecastingObject"){
@@ -11,7 +11,14 @@ impCaretDefault <- function(fo, modelName = "rf", trainControl = NULL, variableA
 
 
   x<-apply(fo$train,2,pMiss)
-  needImputation <- names(x[x>0])
+
+
+  if(variablesToImpute != c()){
+    needImputation<-variablesToImpute
+  }else{
+    needImputation <- names(x[x>0])
+  }
+
 
 
   if(variableAutoselection){

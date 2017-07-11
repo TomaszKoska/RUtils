@@ -2,6 +2,12 @@ outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), ma
 #usuwa wszystkie obserwacje dla których dowolna zmienna numeryczna przyjmuje wartość oddaloną o
 #zadaną liczbę odchyleń standardowych od średniej
 
+
+  if(class(fo) != "ForecastingObject"){
+    warning("This function should get ForecastingObject as parameter. Please use buildForecastingObject.")
+    return(NULL)
+  }
+
   ignoredVariables <- append(ignoredVariables,fo$yName)
 
   checkedVars <- setdiff(names(fo$train), ignoredVariables)
