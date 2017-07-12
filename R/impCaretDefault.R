@@ -6,7 +6,7 @@ impCaretDefault <- function(fo, modelName = "rf", trainControl = NULL, variableA
   return(NULL)
   }
   if(is.null(trainControl)){
-    trainControl <- trainControl(method="repeatedcv", number=10, repeats=5,verboseIter = verbose)
+    trainControl <- trainControl(method="repeatedcv", number=3, repeats=3,verboseIter = verbose)
   }
 
 
@@ -18,7 +18,12 @@ impCaretDefault <- function(fo, modelName = "rf", trainControl = NULL, variableA
   }else{
     needImputation <- names(x[x>0])
   }
+  needImputation <- setdiff(needImputation,fo$yName)
 
+  if(length(needImputation)<=0){
+    print("No variables to impute!")
+    return(fo)
+  }
 
 
   if(variableAutoselection){
@@ -48,4 +53,6 @@ impCaretDefault <- function(fo, modelName = "rf", trainControl = NULL, variableA
 #
 # fo <- impCaretDefault(fo,modelName = "ridge")
 #
+
+
 

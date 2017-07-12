@@ -43,3 +43,16 @@ fo3 <- outNumericStdDev(fo3,1.5)
 fo3 <- traNormalizeNumerics(fo3)
 str(fo3$train)
 summary(fo3$train)
+
+
+
+
+
+str(fo$train)
+fo2 <- fo
+fo2$train[1:10,1:5] <- NA
+fo2 <- impCaretDefault(fo2)
+fo2 <- outNumericStdDev(fo2,2)
+fo2 <- traNormalizeNumerics(fo2)
+str(fo2$train)
+
