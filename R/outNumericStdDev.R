@@ -19,23 +19,23 @@ outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), ma
       stddev <- sd(fo$train[,n])
       upper.bound <- avg + stddev*howManyDevsAway
       lower.bound <- avg - stddev*howManyDevsAway
-      print("avg")
-      print(avg)
-      print("std")
-      print(stddev)
-      print("up")
-      print(upper.bound)
-      print("lo")
-      print(lower.bound)
-      print(fo$train[,n] )
+      # print("avg")
+      # print(avg)
+      # print("std")
+      # print(stddev)
+      # print("up")
+      # print(upper.bound)
+      # print("lo")
+      # print(lower.bound)
+      # print(fo$train[,n] )
       x<-sum(fo$train[,n] > upper.bound | fo$train[,n] < lower.bound )
-      print("x")
-      print(x)
+      # print("x")
+      # print(x)
       if(ifelse(!is.na(x),x,Inf) < maxRemovedPercentage*nrow(fo$train) && x >0){
-        print("coś będzie usunięte")
+        # print("coś będzie usunięte")
         toRemove <- append(toRemove,which(fo$train[,n] > upper.bound | fo$train[,n] < lower.bound))
         toRemove2 <- append(toRemove,which(fo$forecast[,n] > upper.bound | fo$forecast[,n] < lower.bound))
-        print(length(toRemove))
+        # print(length(toRemove))
       }
     }
   }

@@ -1,4 +1,4 @@
-impCaretDefault <- function(fo, modelName = "rf", trainControl = NULL, variableAutoselection = F, variablesToImpute = c(),forbiddenVariables = c()){
+impCaretDefault <- function(fo, modelName = "rf", trainControl = NULL, variableAutoselection = F, variablesToImpute = NULL,forbiddenVariables = c(),verbose=F){
   require(caret)
 
   if(class(fo) != "ForecastingObject"){
@@ -6,14 +6,14 @@ impCaretDefault <- function(fo, modelName = "rf", trainControl = NULL, variableA
   return(NULL)
   }
   if(is.null(trainControl)){
-    trainControl <- trainControl(method="repeatedcv", number=10, repeats=5,verboseIter = TRUE)
+    trainControl <- trainControl(method="repeatedcv", number=10, repeats=5,verboseIter = verbose)
   }
 
 
   x<-apply(fo$train,2,pMiss)
 
-
-  if(variablesToImpute != c()){
+# print(variablesToImpute)
+  if(!is.null(variablesToImpute)){
     needImputation<-variablesToImpute
   }else{
     needImputation <- names(x[x>0])
