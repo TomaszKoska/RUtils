@@ -1,8 +1,8 @@
 
-buildForecastingObject <- function(dfTrain, dfForecast, yName, initialDescription = c("")){
+buildForecastingObject <- function(dfTrain, dfForecast, yName, initialDescription = c("So we took the data...")){
 #first two arguments can be string paths or dataframes (which is recommended)
 
-    if(class(dfTrain)=="character"){
+  if(class(dfTrain)=="character"){
     #treat dfTrain as a path
     dfTrain <- read.csv(dfTrain)
   }
@@ -10,6 +10,11 @@ buildForecastingObject <- function(dfTrain, dfForecast, yName, initialDescriptio
     #treat dfForecast as a path
     dfForecast <- read.csv(dfForecast)
   }
+
+  if(!(yName %in% colnames(dfForecast))){
+    dfForecast[,yName] <- rep(NA,nrow(dfForecast))
+  }
+
 
   output <- list()
   output$train <- dfTrain
