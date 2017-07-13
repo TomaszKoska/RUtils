@@ -12,7 +12,7 @@ traZbijacz <- function(fo,minCount=10){
   inTrain[1:nrow(fo$trainFull)]<-TRUE
 
   for(n in names(df)){ #Dla każdego factora
-    print(n)
+    # print(n)
     if(class(df[,n])=="factor" && n != fo$yName){
       counts<-sort(table(df[,n]))
       levelsToRemove<- names(counts[counts<minCount])
@@ -35,16 +35,19 @@ traZbijacz <- function(fo,minCount=10){
           newLevelName <- distances[1,"level"]
           df[df[,n]==ltr,n] <- newLevelName
           df[,n]<-droplevels(df[,n])
-          if(length(levels(df[,n]))==1){
+          if(length(levels(df[,n]))==1){ #usuń zmienne z jednym poziomem!
             df[,n] <-NULL
           }
         }
       }
     }
   }
+# print(dim(df))
+# print(dim(df[inTrain,]))
+# print(dim(df[!inTrain,]))
 
-  fo$train <- df[inTrain,]
-  fo$fullTrain <- df[inTrain,]
+  fo$trainFull <- df[inTrain,]
+  fo$train <- fo$trainFull
   fo$forecast <- df[!inTrain,]
   fo$description <- append(fo$description, "And then we used zbijacz!")
   fo
