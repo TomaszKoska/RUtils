@@ -275,6 +275,8 @@ someTestStuff <- function(){
 
   head(fo$train)
 
+  diagnose(fo)
+
   x<- apply(fo$train,2,pMiss)
   x<-x[x>0]
   x
@@ -282,12 +284,11 @@ someTestStuff <- function(){
   x<- apply(fo$train,2,pMiss)
   x<-x[x>0]
   x
-  fo <- impCaretDefault(fo=fo,verbose = T,forbiddenVariables = c("Id"))
-  x<- apply(fo$forecast,2,pMiss)
-  x<-x[x>0]
+  fo<-redRemoveSelected(fo,namesToRemove = c("PoolQC","Fence","MiscFeature"))
+  fo <- impCaretDefault(fo=fo,forbiddenVariables = c("Id"),trainControl = trainControl(method="repeatedcv", number=2, repeats=1,verboseIter = T))
   x
   fo <- traNormalizeNumerics(fo,c("Id"))
-
+  fo <- traZbijacz(fo)
 }
 
 

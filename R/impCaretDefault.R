@@ -46,10 +46,15 @@ impCaretDefault <- function(fo, modelName = "rf", trainControl = NULL, variableA
   xs<-fo$train[,allowedVariables]
 
   for(n in needImputation){
+    print(paste(c("Let's start with ", n),collapse = ""))
     frml <- paste(c(n," ~ ."),collapse = "",sep = "")
     frml <- as.formula(frml)
     print(frml)
-    model <- train(frml, data = xs,method = modelName,trControl=trainControl)
+    g<-cbind(fo$train[,n],xs)
+    # head(g)
+    # str(g)
+    names(g)[1]<-n
+    model <- train(frml, data = g,method = modelName,trControl=trainControl)
     fo$train[is.na(fo$train[,n]),n] <- predict(model, newdata = fo$train)[is.na(fo$train[,n])]
     fo$forecast[is.na(fo$forecast[,n]),n] <- predict(model, newdata = fo$forecast)[is.na(fo$forecast[,n])]
     fo$trainFull[is.na(fo$trainFull[,n]),n] <- predict(model, newdata = fo$trainFull)[is.na(fo$trainFull[,n])]
