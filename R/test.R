@@ -284,11 +284,12 @@ someTestStuff <- function(){
   x<- apply(fo$train,2,pMiss)
   x<-x[x>0]
   x
-  fo<-redRemoveSelected(fo,namesToRemove = c("PoolQC","Fence","MiscFeature"))
-  fo <- impCaretDefault(fo=fo,forbiddenVariables = c("Id"),trainControl = trainControl(method="repeatedcv", number=2, repeats=1,verboseIter = T))
+  # fo<-redRemoveSelected(fo,namesToRemove = c("PoolQC","Fence","MiscFeature"))
+  # fo <- impCaretDefault(fo=fo,forbiddenVariables = c("Id"),trainControl = trainControl(method="repeatedcv", number=2, repeats=1,verboseIter = T))
   x
   fo <- traNormalizeNumerics(fo,c("Id"))
   fo <- traZbijacz(fo)
+  diagnose(fo)
 }
 
 

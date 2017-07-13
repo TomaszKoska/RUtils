@@ -14,7 +14,7 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c()){
         avg <- mean(fo$trainFull[,n],na.rm = T)
         stddev <- sd(fo$trainFull[,n],na.rm = T)
         fo$trainFull[,n] <- (fo$trainFull[,n]-avg)/stddev
-        fo$train[,n] <- (fo$forecast[,n]-avg)/stddev
+        fo$train[,n] <- (fo$train[,n]-avg)/stddev
         fo$forecast[,n] <- (fo$forecast[,n]-avg)/stddev
       }
     }

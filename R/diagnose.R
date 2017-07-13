@@ -43,7 +43,7 @@ diagnoseHelper <- function(df,yName){
   a<-apply(df[,x],2,table)
 
   for(v in a){
-    # print(v)
+    print(v)
     x <-v[v==0]
     if(length(x)>0){
       print(x)
