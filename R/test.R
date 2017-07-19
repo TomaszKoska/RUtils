@@ -290,6 +290,8 @@ someTestStuff <- function(){
   diagnose(fo)
   fo <- traZbijacz(fo,100)
   diagnose(fo)
+  fo<- redRemoveSelected(fo,c("LotFrontage"))
+  fo2<-traNumericAutoTransformer(fo,forbiddenVariables = c("Id"))
 }
 
 

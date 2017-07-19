@@ -40,3 +40,10 @@ toDummiesForTwo <- function(df,oldVar,oldVar2){
   output$tmp <- NULL
   return(output)
 }
+
+square <- function(x){
+  x^2
+}
+cube <- function(x){
+  x^3
+}
