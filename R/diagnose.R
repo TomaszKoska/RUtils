@@ -10,7 +10,7 @@ diagnose <- function(fo,minObs=10){
     print(paste(c("y variable ", fo$yName, " exists in trainFull dataset!"),collapse=""))
   }
   if(fo$yName %in% names(fo$forecast)){
-      print(paste(c("y variable ", fo$yName, " exists in trainFull dataset!"),collapse=""))
+      print(paste(c("y variable ", fo$yName, " exists in forecast dataset!"),collapse=""))
     }
 
   tDiffs<-setdiff(names(fo$train),names(fo$forecast))
