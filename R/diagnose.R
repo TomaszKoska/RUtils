@@ -2,6 +2,14 @@ diagnose <- function(fo,minObs=10){
   #funkcja weźmie fo i sprawdzi:
   # w każdym data secie
   #wszystko to co diagnoseHelper robi
+  #i inne rzeczy też...
+
+  if(class(fo) != "ForecastingObject"){
+    warning("This function should get ForecastingObject as parameter. Please use buildForecastingObject.")
+    return(NULL)
+  }
+
+
 
   if(fo$yName %in% names(fo$train)){
     print(paste(c("y variable ", fo$yName , " exists in train dataset!"),collapse=""))

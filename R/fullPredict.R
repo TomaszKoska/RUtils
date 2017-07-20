@@ -1,0 +1,17 @@
+fullPredict <- function(fo, caretModel,forecastOutputFile = "outputForecast.csv", fullOutputFile = "outputFull.csv", modelFile="model.RData"){
+  require(caret)
+  if(class(fo) != "ForecastingObject"){
+    warning("This function should get ForecastingObject as parameter. Please use buildForecastingObject.")
+    return(NULL)
+  }
+
+  predictionTrainFull <- predict(object = caretModel, newdata = fo$trainFull)
+  predictionForecast <- predict(object = caretModel, newdata = fo$forecast)
+
+  predictionAll <- rbind(predictionTrainFull,predictionForecast)
+
+  write.csv(predictionAll,fullOutputFile, row.names=FALSE)
+  write.csv(predictionForecast,forecastOutputFile, row.names=FALSE)
+  save(caretModel,file="modelFile.RData")
+
+}
