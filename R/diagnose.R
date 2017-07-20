@@ -2,6 +2,32 @@ diagnose <- function(fo,minObs=10){
   #funkcja weźmie fo i sprawdzi:
   # w każdym data secie
   #wszystko to co diagnoseHelper robi
+
+  if(fo$yName %in% names(fo$train)){
+    print(paste(c("y variable ", fo$yName , " exists in train dataset!"),collapse=""))
+  }
+  if(fo$yName %in% names(fo$trainFull)){
+    print(paste(c("y variable ", fo$yName, " exists in trainFull dataset!"),collapse=""))
+  }
+  if(fo$yName %in% names(fo$forecast)){
+      print(paste(c("y variable ", fo$yName, " exists in trainFull dataset!"),collapse=""))
+    }
+
+  tDiffs<-setdiff(names(fo$train),names(fo$forecast))
+  fDiffs<- setdiff(names(fo$forecast),names(fo$train))
+  trainDiffs <- paste(tDiffs,collapse = ",")
+  forecastDiff <- paste(fDiffs,collapse = ",")
+
+  if(length(tDiffs) > 0){
+    print(paste(c("Variables missing in train that are in forecast: ", trainDiffs),collapse=""))
+  }
+  if(length(fDiffs) > 0){
+    print(paste(c("Variables missing in train that are in forecast: ", forecastDiff),collapse=""))
+  }
+
+
+
+
   print("Train dataset")
   diagnoseHelper(fo$train,fo$yName,minObs)
   print("")
