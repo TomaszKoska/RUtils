@@ -34,16 +34,16 @@ outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), ma
       if(ifelse(!is.na(x),x,Inf) < maxRemovedPercentage*nrow(fo$train) && x >0){
         # print("coś będzie usunięte")
         toRemove <- append(toRemove,which(fo$train[,n] > upper.bound | fo$train[,n] < lower.bound))
-        toRemove2 <- append(toRemove,which(fo$forecast[,n] > upper.bound | fo$forecast[,n] < lower.bound))
+        # toRemove2 <- append(toRemove,which(fo$forecast[,n] > upper.bound | fo$forecast[,n] < lower.bound))
         # print(length(toRemove))
       }
     }
   }
   if(length(toRemove) > 0){
   toRemove<-sort(unique(toRemove))
-  toRemove2<-sort(unique(toRemove2))
+  # toRemove2<-sort(unique(toRemove2))
   fo$train <- fo$train[-toRemove,]
-  fo$forecast <- fo$forecast[-toRemove2,]
+  # fo$forecast <- fo$forecast[-toRemove2,]
   }
 
 
