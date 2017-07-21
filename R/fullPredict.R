@@ -8,7 +8,9 @@ fullPredict <- function(fo, caretModel,forecastOutputFile = "outputForecast.csv"
   predictionTrainFull <- predict(object = caretModel, newdata = fo$trainFull)
   predictionForecast <- predict(object = caretModel, newdata = fo$forecast)
 
-  predictionAll <- rbind(predictionTrainFull,predictionForecast)
+  predictionAll <- append(predictionTrainFull,predictionForecast)
+  names(predictionAll) <- fo$yName
+  names(predictionForecast) <- fo$yName
 
   write.csv(predictionAll,fullOutputFile, row.names=FALSE)
   write.csv(predictionForecast,forecastOutputFile, row.names=FALSE)
