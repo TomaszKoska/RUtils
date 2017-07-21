@@ -286,12 +286,18 @@ someTestStuff <- function(){
   x
   # fo<-redRemoveSelected(fo,namesToRemove = c("PoolQC","Fence","MiscFeature"))
   # fo <- impCaretDefault(fo=fo,forbiddenVariables = c("Id"),trainControl = trainControl(method="repeatedcv", number=2, repeats=1,verboseIter = T))
-  fo <- traNormalizeNumerics(fo,c("Id"))
+  # fo <- traNormalizeNumerics(fo,c("Id"))
   diagnose(fo)
   fo <- traZbijacz(fo,100)
   diagnose(fo)
   fo<- redRemoveSelected(fo,c("LotFrontage"))
   fo2<-traNumericAutoTransformer(fo,forbiddenVariables = c("Id"))
+  fo2<-traBoxCox(fo,lambda = 1, choosenVariables = c("MiscVal"),forbiddenVariables = c("Id"))
+  summary(fo$train$MiscVal)
+  summary(fo2$train$MiscVal)
+  par(mfrow=c(1,2))
+  hist(fo$train$MiscVal)
+  hist(fo2$train$MiscVal)
 }
 
 
