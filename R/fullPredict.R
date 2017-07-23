@@ -14,6 +14,6 @@ fullPredict <- function(fo, caretModel,forecastOutputFile = "outputForecast.csv"
 
   write.csv(predictionAll,fullOutputFile, row.names=FALSE)
   write.csv(predictionForecast,forecastOutputFile, row.names=FALSE)
-  save(caretModel,file="modelFile.RData")
+  save(caretModel,file=modelFile)
 
 }
