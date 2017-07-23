@@ -9,6 +9,9 @@ fullPredictExp <- function(fo, caretModel,forecastOutputFile = "outputForecast.c
   predictionForecast <- exp(predict(object = caretModel, newdata = fo$forecast))
 
   predictionAll <- append(predictionTrainFull,predictionForecast)
+  predictionAll <- as.data.frame(predictionAll)
+  predictionForecast <- as.data.frame(predictionForecast)
+
   names(predictionAll) <- fo$yName
   names(predictionForecast) <- fo$yName
 
