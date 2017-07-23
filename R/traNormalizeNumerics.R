@@ -1,4 +1,4 @@
-traNormalizeNumerics <- function(fo, forbiddenVariables=c()){
+traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upperP = 0.75){
 
   if(class(fo) != "ForecastingObject"){
     warning("This function should get ForecastingObject as parameter. Please use buildForecastingObject.")
@@ -12,8 +12,15 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c()){
   if(length(variablesToCheck) > 0){
     for(n in variablesToCheck){
       if(class(fo$trainFull[,n])=="integer" || class(fo$trainFull[,n])=="numeric" ){
-        avg <- mean(fo$trainFull[,n],na.rm = T)
-        stddev <- sd(fo$trainFull[,n],na.rm = T)
+        lower <- quantile(fo$train[,n],lowerP)
+        upper <-quantile(fo$train[,n],upperP)
+
+        toCalculation <- fo$trainFull[fo$trainFull[,n] >= lower,]
+        toCalculation <- fo$trainFull[toCalculation <= upper,]
+
+        avg <- mean(toCalculation[,n],na.rm = T)
+        stddev <- sd(toCalculation[,n],na.rm = T)
+
         fo$trainFull[,n] <- (fo$trainFull[,n]-avg)/stddev
         fo$train[,n] <- (fo$train[,n]-avg)/stddev
         fo$forecast[,n] <- (fo$forecast[,n]-avg)/stddev
