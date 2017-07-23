@@ -1,4 +1,4 @@
-fullPredict <- function(fo, caretModel,forecastOutputFile = "outputForecast.csv", fullOutputFile = "outputFull.csv", modelFile="model.RData"){
+fullPredict <- function(fo, caretModel,forecastOutputFile = "outputForecast.csv", fullOutputFile = "outputFull.csv", modelFile="model.RData", idColumn = NULL){
   require(caret)
   if(class(fo) != "ForecastingObject"){
     warning("This function should get ForecastingObject as parameter. Please use buildForecastingObject.")
