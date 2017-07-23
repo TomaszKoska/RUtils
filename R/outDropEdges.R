@@ -1,4 +1,4 @@
-dropEdges  <- function(fo,lowerP = 0.25, upperP = 0.75){
+outDropEdges  <- function(fo,lowerP = 0.25, upperP = 0.75){
   if(class(fo) != "ForecastingObject"){
     warning("This function should get ForecastingObject as parameter. Please use buildForecastingObject.")
     return(NULL)
