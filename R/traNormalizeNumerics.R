@@ -8,6 +8,7 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c()){
   #jedź przez wszystkie zmienne
     #jeśli nie numeric i nie forbidden - normalizuj
   variablesToCheck <- setdiff(names(fo$trainFull),forbiddenVariables)
+  variablesToCheck <- setdiff(names(fo$trainFull),c(fo$yName))
   if(length(variablesToCheck) > 0){
     for(n in variablesToCheck){
       if(class(fo$trainFull[,n])=="integer" || class(fo$trainFull[,n])=="numeric" ){
