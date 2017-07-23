@@ -1,8 +1,9 @@
-dropEdges  <- function(fo,lowerP = 0.25, upperP = 0.75){
+outDropEdges  <- function(fo,lowerP = 0.25, upperP = 0.75){
   if(class(fo) != "ForecastingObject"){
     warning("This function should get ForecastingObject as parameter. Please use buildForecastingObject.")
     return(NULL)
   }
+  n <- fo$yName
   lower <- quantile(fo$train[,n],lowerP)
   upper <-quantile(fo$train[,n],upperP)
 
