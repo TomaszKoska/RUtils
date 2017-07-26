@@ -43,5 +43,8 @@ traReplaceNumericsWithPCA <- function(fo, choosenVariables=NULL, forbiddenVariab
 
   fo$description <- append(fo$description,"And after that we did PCA!")
 
+
   fo
+
+
 }
