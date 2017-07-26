@@ -270,6 +270,7 @@ impCustomPreparation <- function(fo){
 
 
 someTestStuff <- function(){
+  library("devtools")
   fo <- buildForecastingObject("C:\\Users\\Tomek\\Desktop\\kaggle\\houses\\raw\\train.csv",
                                "C:\\Users\\Tomek\\Desktop\\kaggle\\houses\\raw\\test.csv","SalePrice","")
 
@@ -292,12 +293,8 @@ someTestStuff <- function(){
   diagnose(fo)
   fo<- redRemoveSelected(fo,c("LotFrontage"))
   fo2<-traNumericAutoTransformer(fo,forbiddenVariables = c("Id"))
-  fo2<-traBoxCox(fo,lambda = 1, choosenVariables = c("MiscVal"),forbiddenVariables = c("Id"))
-  summary(fo$train$MiscVal)
-  summary(fo2$train$MiscVal)
-  par(mfrow=c(1,2))
-  hist(fo$train$MiscVal)
-  hist(fo2$train$MiscVal)
+  diagnose(fo2)
+  fo2 <- traReplaceNumericsWithPCA(fo2)
 }
 
 

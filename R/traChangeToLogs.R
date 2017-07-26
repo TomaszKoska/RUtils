@@ -23,9 +23,9 @@ traChangeToLogs <- function(fo, choosenVariables=NULL, forbiddenVariables=c()){
 
 
   #wywalenie zmiennych, które mają wartości poniżej 0 lub 0
-  areThereZeros<-apply(fo$trainFull[,choosenVariables],2,min,na.rm = T)
+  areThereZeros<-apply((fo$trainFull[,choosenVariables]+1),2,min,na.rm = T)
   areThereZeros<-names(areThereZeros[areThereZeros<=0])
-  areThereZerosForecast<-apply(fo$forecast[,choosenVariables],2,min,na.rm = T)
+  areThereZerosForecast<-apply((fo$forecast[,choosenVariables]+1),2,min,na.rm = T)
   areThereZerosForecast<-names(areThereZerosForecast[areThereZerosForecast<=0])
   choosenVariables<-setdiff(choosenVariables,areThereZeros)
   choosenVariables<-setdiff(choosenVariables,areThereZerosForecast)
@@ -44,9 +44,9 @@ traChangeToLogs <- function(fo, choosenVariables=NULL, forbiddenVariables=c()){
   #czy są w ogóle jakieś choosen?
   if(length(choosenVariables)>0){
     for(n in choosenVariables){
-      fo$train[,n] <- log(fo$train[,n])
-      fo$trainFull[,n] <- log(fo$trainFull[,n])
-      fo$forecast[,n] <- log(fo$forecast[,n])
+      fo$train[,n] <- log(fo$train[,n]+1)
+      fo$trainFull[,n] <- log(fo$trainFull[,n]+1)
+      fo$forecast[,n] <- log(fo$forecast[,n]+1)
     }
   }
 
