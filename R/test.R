@@ -293,8 +293,27 @@ someTestStuff <- function(){
   diagnose(fo)
   fo<- redRemoveSelected(fo,c("LotFrontage"))
   fo2<-traNumericAutoTransformer(fo,forbiddenVariables = c("Id"))
-  diagnose(fo2)
-  fo2 <- traReplaceNumericsWithPCA(fo2)
+
+  fo3 <- traReplaceNumericsWithPCA(fo2,forbiddenVariables = c("Id","LowQualFinSF"))
+  diagnose(fo3)
+
+
+  str(fo$forecast)
+  str(fo2$forecast)
+  numerics<-c("LotArea","YearBuilt","YearRemodAdd","MasVnrArea","X1stFlrSF","X2ndFlrSF","LowQualFinSF","GrLivArea","GarageArea","WoodDeckSF","OpenPorchSF","EnclosedPorch","X3SsnPorch","ScreenPorch","PoolArea","MiscVal","YrSold","age","sinceLastRemod")
+
+
+  fo2$forecast[is.na(fo2$forecast$PC1),]
+  fo2$forecast[1,]
+
+  fo$forecast[is.na(fo2$forecast$PC1),numerics]
+  fo$forecast[1,numerics]
+
+  fo4 <- traAutoBoxCox(fo2,forbiddenVariables = c("Id"))
+
+  hist(fo4$train$BsmtFinSF2)
+  hist(fo2$train$BsmtFinSF2)
+
 }
 
 

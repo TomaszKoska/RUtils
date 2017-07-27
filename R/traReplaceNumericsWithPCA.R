@@ -1,4 +1,5 @@
 traReplaceNumericsWithPCA <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), keepPC=0){
+
   # choosenVariables - if null the function will transform all numeric variables
 
   if(class(fo) != "ForecastingObject"){
@@ -20,6 +21,7 @@ traReplaceNumericsWithPCA <- function(fo, choosenVariables=NULL, forbiddenVariab
   #wywalenie zmiennej celu
   choosenVariables<-setdiff(choosenVariables,fo$yName)
 
+  print(paste(choosenVariables,collapse = ","))
 
   xTrain <- fo$train[,choosenVariables]
   xForecast <- fo$forecast[,choosenVariables]
