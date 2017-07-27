@@ -14,6 +14,7 @@ traZbijacz <- function(fo,minCount=10){
   for(n in names(df)){ #Dla każdego factora
     # print(n)
     if(class(df[,n])=="factor" && n != fo$yName){
+      df[,n] <- droplevels(df[,n])
       counts<-sort(table(df[,n]))
       levelsToRemove<- names(counts[counts<minCount])
 
