@@ -1,4 +1,4 @@
-traZbijacz <- function(fo,minCount=10){
+traZbijacz <- function(fo,minCount=10,verbose=F){
 
 
   if(class(fo) != "ForecastingObject"){
@@ -12,9 +12,10 @@ traZbijacz <- function(fo,minCount=10){
   inTrain[1:nrow(fo$trainFull)]<-TRUE
 
   for(n in names(df)){ #Dla każdego factora
-    # print(n)
+    if(verbose) {print(n)}
     if(class(df[,n])=="factor" && n != fo$yName){
       df[,n] <- droplevels(df[,n])
+      if(verbose) {print(table(df[,n]))}
       counts<-sort(table(df[,n]))
       levelsToRemove<- names(counts[counts<minCount])
 
