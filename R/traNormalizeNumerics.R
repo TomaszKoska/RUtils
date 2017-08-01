@@ -20,12 +20,18 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
         lower <- quantile(fo$train[,n],lowerP)
         upper <-quantile(fo$train[,n],upperP)
 
-        if(verbose){
-          print(paste(c(n,lower,upper),collapse = "|"))
-        }
+
 
         toCalculation <- fo$trainFull[fo$trainFull[,n] >= lower,]
         toCalculation <- fo$trainFull[toCalculation <= upper,]
+
+        if(verbose){
+          print(paste(c(n,lower,upper),collapse = "|"))
+          print(lower)
+          print(upper)
+          print(head(toCalculation,200))
+        }
+
 
         avg <- mean(toCalculation[,n],na.rm = T)
         stddev <- sd(toCalculation[,n],na.rm = T)
