@@ -1,4 +1,4 @@
-traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upperP = 0.75){
+traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upperP = 0.75, verbose = F){
 
   if(class(fo) != "ForecastingObject"){
     warning("This function should get ForecastingObject as parameter. Please use buildForecastingObject.")
@@ -12,6 +12,9 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
   if(length(variablesToCheck) > 0){
     for(n in variablesToCheck){
       if(class(fo$trainFull[,n])=="integer" || class(fo$trainFull[,n])=="numeric" ){
+        if(verbose){print(n)}
+
+
         lower <- quantile(fo$train[,n],lowerP)
         upper <-quantile(fo$train[,n],upperP)
 

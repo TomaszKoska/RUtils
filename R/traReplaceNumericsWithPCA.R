@@ -29,7 +29,7 @@ traReplaceNumericsWithPCA <- function(fo, choosenVariables=NULL, forbiddenVariab
 
   myPCA <- prcomp(xTrain,
                   center = TRUE,
-                  scale. = TRUE)
+                  scale = TRUE)
 
   a<- predict(myPCA, newdata=xTrain)
   b<- predict(myPCA, newdata=xForecast)
