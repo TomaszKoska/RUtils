@@ -1,4 +1,4 @@
-traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), functionsToTest = c("log","exp","sin","square","cube")){
+traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), functionsToTest = c("log","exp","sin","square","cube"),verbose=F){
   # choosenVariables - if null the function will transform all numeric variables
 
   if(class(fo) != "ForecastingObject"){
@@ -42,8 +42,15 @@ traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariab
       }
     }
     if(bestFunctionForNow != ""){
+      if(verbose){
+        print(bestFunctionForNow)
+        print(n)
+      }
       fun<-eval(parse(text=bestFunctionForNow))
       fo$train[,n] <- sapply(X=fo$train[,n],FUN = fun)
+      if(verbose){
+        print(summary(fo$train[,n]))
+      }
       fo$trainFull[,n] <- sapply(X=fo$trainFull[,n],FUN = fun)
       fo$forecast[,n] <- sapply(X=fo$forecast[,n],FUN = fun)
       print(paste(c(n," zmieani się na ", bestFunctionForNow),collapse = ""))
