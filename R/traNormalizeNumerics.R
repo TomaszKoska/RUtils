@@ -12,11 +12,15 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
   if(length(variablesToCheck) > 0){
     for(n in variablesToCheck){
       if(class(fo$trainFull[,n])=="integer" || class(fo$trainFull[,n])=="numeric" ){
-        if(verbose){print(n)}
+
 
 
         lower <- quantile(fo$train[,n],lowerP)
         upper <-quantile(fo$train[,n],upperP)
+
+        if(verbose){
+          print(paste(c(n,lower,upper),collapse = "|"))
+        }
 
         toCalculation <- fo$trainFull[fo$trainFull[,n] >= lower,]
         toCalculation <- fo$trainFull[toCalculation <= upper,]
