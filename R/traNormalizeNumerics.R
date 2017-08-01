@@ -23,7 +23,7 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
 
 
         toCalculation <- fo$trainFull[fo$trainFull[,n] >= lower,]
-        toCalculation <- fo$trainFull[toCalculation <= upper,]
+        toCalculation <- fo$trainFull[toCalculation[,n] <= upper,]
 
         if(verbose){
           print(paste(c(n,lower,upper),collapse = "|"))
