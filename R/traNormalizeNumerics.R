@@ -29,7 +29,7 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
           print(paste(c(n,lower,upper),collapse = "|"))
           print(lower)
           print(upper)
-          print(head(toCalculation,200))
+          print(head(toCalculation[,n],200))
         }
 
 
