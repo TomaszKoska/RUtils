@@ -7,6 +7,8 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
 
   #jedź przez wszystkie zmienne
     #jeśli nie numeric i nie forbidden - normalizuj
+  cheatDf <-rbind(fo$train,fo$forecast)
+
   variablesToCheck <- setdiff(names(fo$trainFull),forbiddenVariables)
   variablesToCheck <- setdiff(variablesToCheck,c(fo$yName))
   if(length(variablesToCheck) > 0){
@@ -17,7 +19,6 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
           print(n)
         }
 
-        cheatDf <-rbind(fo$train,fo$forecast)
 
         if(cheatingMode){
           lower <- quantile(cheatDf,lowerP)
