@@ -33,16 +33,19 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
         }
 
 
+
+
+        avg <- mean(toCalculation[,n],na.rm = T)
+        stddev <- sd(toCalculation[,n],na.rm = T)
+
         if(verbose){
-          print(paste(c(n,lower,upper),collapse = "|"))
+          print(paste(c(n,lower,upper,avg,stddev),collapse = "|"))
           print(lower)
           print(upper)
           print(head(toCalculation[,n],200))
         }
 
 
-        avg <- mean(toCalculation[,n],na.rm = T)
-        stddev <- sd(toCalculation[,n],na.rm = T)
 
         fo$trainFull[,n] <- (fo$trainFull[,n]-avg)/stddev
         fo$train[,n] <- (fo$train[,n]-avg)/stddev
