@@ -17,17 +17,22 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
 
         if(verbose){
           print(n)
+          print("cheat")
+          print(summary(cheatDf))
+          print("trainFull")
+          print(summary(fo$trainFull))
+
         }
 
 
         if(cheatingMode){
           lower <- quantile(cheatDf,lowerP)
-          upper <-quantile(cheatDf,upperP)
+          upper <- quantile(cheatDf,upperP)
           toCalculation <- cheatDf[cheatDf[,n] >= lower,]
           toCalculation <- cheatDf[toCalculation[,n] <= upper,]
         }else{
           lower <- quantile(fo$train[,n],lowerP)
-          upper <-quantile(fo$train[,n],upperP)
+          upper <- quantile(fo$train[,n],upperP)
           toCalculation <- fo$trainFull[fo$trainFull[,n] >= lower,]
           toCalculation <- fo$trainFull[toCalculation[,n] <= upper,]
         }
@@ -42,7 +47,7 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
           print(paste(c(n,lower,upper,avg,stddev),collapse = "|"))
           print(lower)
           print(upper)
-          print(head(toCalculation[,n],200))
+          # print(head(toCalculation[,n],200))
         }
 
 
