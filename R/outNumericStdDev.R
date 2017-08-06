@@ -1,4 +1,4 @@
-outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), maxRemovedPercentage= 0.01){
+outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), maxRemovedPercentage= 0.01, cheatingMode=F){
 #usuwa wszystkie obserwacje dla których dowolna zmienna numeryczna przyjmuje wartość oddaloną o
 #zadaną liczbę odchyleń standardowych od średniej
 
@@ -8,6 +8,15 @@ outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), ma
     return(NULL)
   }
 
+
+
+  if(cheatingMode){
+    df <-rbind(fo$train,fo$forecast)
+  }else{
+    df <- fo$train
+  }
+
+
   ignoredVariables <- append(ignoredVariables,fo$yName)
 
   checkedVars <- setdiff(names(fo$train), ignoredVariables)
@@ -15,8 +24,10 @@ outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), ma
   toRemove2<-c()
   for(n in checkedVars){
     if(class(fo$train[,n])!="factor" && class(fo$train[,n])!="character" && class(fo$train[,n])!="logical"){
-      avg <- mean(fo$train[,n])
-      stddev <- sd(fo$train[,n])
+
+      avg <- mean(df[,n])
+      stddev <- sd(df[,n])
+
       upper.bound <- avg + stddev*howManyDevsAway
       lower.bound <- avg - stddev*howManyDevsAway
       # print("avg")

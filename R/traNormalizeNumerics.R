@@ -1,4 +1,4 @@
-traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upperP = 0.75, verbose = F){
+traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upperP = 0.75, verbose = F, cheatingMode=F){
 
   if(class(fo) != "ForecastingObject"){
     warning("This function should get ForecastingObject as parameter. Please use buildForecastingObject.")
@@ -17,13 +17,20 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
           print(n)
         }
 
-        lower <- quantile(fo$train[,n],lowerP)
-        upper <-quantile(fo$train[,n],upperP)
+        cheatDf <-rbind(fo$train,fo$forecast)
 
+        if(cheatingMode){
+          lower <- quantile(cheatDf,lowerP)
+          upper <-quantile(cheatDf,upperP)
+          toCalculation <- cheatDf[cheatDf[,n] >= lower,]
+          toCalculation <- cheatDf[toCalculation[,n] <= upper,]
+        }else{
+          lower <- quantile(fo$train[,n],lowerP)
+          upper <-quantile(fo$train[,n],upperP)
+          toCalculation <- fo$trainFull[fo$trainFull[,n] >= lower,]
+          toCalculation <- fo$trainFull[toCalculation[,n] <= upper,]
+        }
 
-
-        toCalculation <- fo$trainFull[fo$trainFull[,n] >= lower,]
-        toCalculation <- fo$trainFull[toCalculation[,n] <= upper,]
 
         if(verbose){
           print(paste(c(n,lower,upper),collapse = "|"))

@@ -1,6 +1,7 @@
-traReplaceNumericsWithPCA <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), keepPC=0){
+traReplaceNumericsWithPCA <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), keepPC=0, cheatingMode=F){
 
   # choosenVariables - if null the function will transform all numeric variables
+  # keepPC will be implemented some time in the future
 
   if(class(fo) != "ForecastingObject"){
     warning("This function should get ForecastingObject as parameter. Please use buildForecastingObject.")
@@ -23,11 +24,19 @@ traReplaceNumericsWithPCA <- function(fo, choosenVariables=NULL, forbiddenVariab
 
   print(paste(choosenVariables,collapse = ","))
 
+  cheatDf <-rbind(fo$train,fo$forecast)
+  xs <- fo$train[,choosenVariables]
+
+  if(cheatingMode){
+    xs <-  cheatDf[,choosenVariables]
+  }
+
+
   xTrain <- fo$train[,choosenVariables]
   xForecast <- fo$forecast[,choosenVariables]
   xTrainFull <- fo$trainFull[,choosenVariables]
 
-  myPCA <- prcomp(xTrain,
+  myPCA <- prcomp(xs,
                   center = TRUE,
                   scale = TRUE)
 

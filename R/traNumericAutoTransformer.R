@@ -1,4 +1,4 @@
-traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), functionsToTest = c("log","exp","sin","square","cube"),verbose=F){
+traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), functionsToTest = c("log","exp"),verbose=F, cheatingMode=F){
   # choosenVariables - if null the function will transform all numeric variables
 
   if(class(fo) != "ForecastingObject"){
@@ -26,16 +26,25 @@ traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariab
       #jeśli nie to mierzymy korelację
     #wybranie funkcji z najwięszką korelacją jako rozwiązania
 
+  cheatDf <- rbind(fo$train,fo$forecast)
+
+    df <- fo$train
+  if(cheatingMode){
+    df <- cheatDf #podmieniam tylko jeśli cheating mode!
+  }
+
   for(n in choosenVariables){
 
-    baseCorrelation <- cor(fo$train[,n],fo$train[,fo$yName])
+    baseCorrelation <- cor(df[,n],df[,fo$yName])
+
+
     bestFunctionForNow <- ""
 
     for(f in functionsToTest){
       fun<-eval(parse(text=f))
-      value <- sapply(X=fo$train[,n],FUN = fun)
+      value <- sapply(X=df[,n],FUN = fun)
       if(sum(is.finite(value)) >= length(value)){
-        testedCorrelation <- cor(value,fo$train[,fo$yName])
+        testedCorrelation <- cor(value,df[,fo$yName])
         if(abs(testedCorrelation) > abs(baseCorrelation)){
           bestFunctionForNow <- f
         }
@@ -47,9 +56,9 @@ traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariab
         print(n)
       }
       fun<-eval(parse(text=bestFunctionForNow))
-      fo$train[,n] <- sapply(X=fo$train[,n],FUN = fun)
+      df[,n] <- sapply(X=df[,n],FUN = fun)
       if(verbose){
-        print(summary(fo$train[,n]))
+        print(summary(df[,n]))
       }
       fo$trainFull[,n] <- sapply(X=fo$trainFull[,n],FUN = fun)
       fo$forecast[,n] <- sapply(X=fo$forecast[,n],FUN = fun)
