@@ -12,16 +12,19 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
   variablesToCheck <- setdiff(names(fo$trainFull),forbiddenVariables)
   variablesToCheck <- setdiff(variablesToCheck,c(fo$yName))
   if(length(variablesToCheck) > 0){
+
+    if(verbose){
+      print("cheat")
+      print(summary(cheatDf[,variablesToCheck]))
+      print("trainFull")
+      print(summary(fo$trainFull[,variablesToCheck]))
+    }
+
     for(n in variablesToCheck){
       if(class(fo$trainFull[,n])=="integer" || class(fo$trainFull[,n])=="numeric" ){
 
         if(verbose){
           print(n)
-          print("cheat")
-          print(summary(cheatDf))
-          print("trainFull")
-          print(summary(fo$trainFull))
-
         }
 
 
