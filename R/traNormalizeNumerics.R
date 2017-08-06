@@ -47,6 +47,11 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
         fo$trainFull[,n] <- (fo$trainFull[,n]-avg)/stddev
         fo$train[,n] <- (fo$train[,n]-avg)/stddev
         fo$forecast[,n] <- (fo$forecast[,n]-avg)/stddev
+
+        if(verbose){
+          print(n)
+          print(summary(fo$trainFull[,n]))
+        }
       }
     }
     fo$description <- append(fo$description, "And then we standardized some variables!")
