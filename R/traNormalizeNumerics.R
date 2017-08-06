@@ -45,9 +45,12 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
 
         avg <- mean(toCalculation[,n],na.rm = T)
         stddev <- sd(toCalculation[,n],na.rm = T)
+        if(stddev==0){
+          stddev <- 1 #if stddev is 0, then we will just center the var
+        }
 
         if(verbose){
-          print("liczymyz tego:")
+          print("liczymy z tego:")
           print(head(toCalculation[,n],100))
           print("policzyliśmy to:")
           print(paste(c(n,lower,upper,avg,stddev),collapse = "|"))
@@ -69,37 +72,3 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
   }
   fo
 }
-
-#
-# fo3 <- buildForecastingObject(iris,iris,"Species")
-# str(fo3$train)
-# summary(fo3$train)
-# fo3 <- traNormalizeNumerics(fo3)
-# str(fo3$train)
-# summary(fo3$train)
-#
-#
-#
-# fo3 <- buildForecastingObject(iris,iris,"Species")
-# fo3$train[1:10,1:2] <- NA
-# fo3$forecast[1:10,1:2] <- NA
-# str(fo3$train)
-# summary(fo3$train)
-# fo3 <- impCaretDefault(fo3)
-# fo3 <- outNumericStdDev(fo3,1.5)
-# fo3 <- traNormalizeNumerics(fo3)
-# str(fo3$train)
-# summary(fo3$train)
-#
-#
-#
-#
-#
-# str(fo$train)
-# fo2 <- fo
-# fo2$train[1:10,1:5] <- NA
-# fo2 <- impCaretDefault(fo2)
-# fo2 <- outNumericStdDev(fo2,2)
-# fo2 <- traNormalizeNumerics(fo2)
-# str(fo2$train)
-

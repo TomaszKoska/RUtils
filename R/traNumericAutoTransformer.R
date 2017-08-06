@@ -26,9 +26,9 @@ traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariab
       #jeśli nie to mierzymy korelację
     #wybranie funkcji z najwięszką korelacją jako rozwiązania
 
-  cheatDf <- rbind(fo$train,fo$forecast)
+  cheatDf <- rbind(fo$trainFull,fo$forecast)
 
-    df <- fo$train
+  df <- fo$train
   if(cheatingMode){
     df <- cheatDf #podmieniam tylko jeśli cheating mode!
   }
@@ -36,8 +36,6 @@ traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariab
   for(n in choosenVariables){
 
     baseCorrelation <- cor(df[,n],df[,fo$yName])
-
-
     bestFunctionForNow <- ""
 
     for(f in functionsToTest){
@@ -60,6 +58,7 @@ traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariab
       if(verbose){
         print(summary(df[,n]))
       }
+
       fo$train[,n] <- sapply(X=fo$train[,n],FUN = fun)
       fo$trainFull[,n] <- sapply(X=fo$trainFull[,n],FUN = fun)
       fo$forecast[,n] <- sapply(X=fo$forecast[,n],FUN = fun)
