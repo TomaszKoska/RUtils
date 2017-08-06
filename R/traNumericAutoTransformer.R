@@ -1,4 +1,4 @@
-traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), functionsToTest = c("log","exp"),verbose=F, cheatingMode=F){
+traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), functionsToTest = c("log","exp","square"),verbose=F, cheatingMode=F){
   # choosenVariables - if null the function will transform all numeric variables
 
   if(class(fo) != "ForecastingObject"){
