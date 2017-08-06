@@ -278,6 +278,7 @@ someTestStuff <- function(){
 
   diagnose(fo)
 
+
   x<- apply(fo$train,2,pMiss)
   x<-x[x>0]
   x
@@ -292,6 +293,10 @@ someTestStuff <- function(){
   fo <- traZbijacz(fo,100)
   diagnose(fo)
   fo<- redRemoveSelected(fo,c("LotFrontage"))
+  fo <- traNormalizeNumerics(fo,c("Id"))
+
+
+
   fo2<-traNumericAutoTransformer(fo,forbiddenVariables = c("Id"))
 
   fo3 <- traReplaceNumericsWithPCA(fo2,forbiddenVariables = c("Id","LowQualFinSF"))

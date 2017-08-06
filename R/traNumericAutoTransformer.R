@@ -60,9 +60,10 @@ traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariab
       if(verbose){
         print(summary(df[,n]))
       }
+      fo$train[,n] <- sapply(X=fo$train[,n],FUN = fun)
       fo$trainFull[,n] <- sapply(X=fo$trainFull[,n],FUN = fun)
       fo$forecast[,n] <- sapply(X=fo$forecast[,n],FUN = fun)
-      print(paste(c(n," zmieani się na ", bestFunctionForNow),collapse = ""))
+      print(paste(c(n," zmieni się na ", bestFunctionForNow),collapse = ""))
     }else{
       print(paste(c(n," bez zmian!"),collapse = ""))
     }

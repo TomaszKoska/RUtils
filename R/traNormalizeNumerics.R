@@ -7,17 +7,17 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
 
   #jedź przez wszystkie zmienne
     #jeśli nie numeric i nie forbidden - normalizuj
-  cheatDf <-rbind(fo$trainFull,fo$forecast)
+  cheatDf <-rbind(fo$train,fo$forecast)
 
   variablesToCheck <- setdiff(names(fo$trainFull),forbiddenVariables)
   variablesToCheck <- setdiff(variablesToCheck,c(fo$yName))
   if(length(variablesToCheck) > 0){
 
     if(verbose){
-      print("cheat")
-      print(summary(cheatDf[,variablesToCheck]))
-      print("trainFull")
-      print(summary(fo$trainFull[,variablesToCheck]))
+      # print("cheat")
+      # print(summary(cheatDf[,variablesToCheck]))
+      # print("trainFull")
+      # print(summary(fo$trainFull[,variablesToCheck]))
     }
 
     for(n in variablesToCheck){
@@ -47,11 +47,10 @@ traNormalizeNumerics <- function(fo, forbiddenVariables=c(),lowerP = 0.25, upper
         stddev <- sd(toCalculation[,n],na.rm = T)
 
         if(verbose){
-          print(head(toCalculation[,n],200))
+          print("liczymyz tego:")
+          print(head(toCalculation[,n],100))
+          print("policzyliśmy to:")
           print(paste(c(n,lower,upper,avg,stddev),collapse = "|"))
-          print(lower)
-          print(upper)
-          #
         }
 
 
