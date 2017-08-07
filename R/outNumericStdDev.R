@@ -33,7 +33,7 @@ outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), ma
       lower.bound <- avg - stddev*howManyDevsAway
 
       if(verbose){
-        print(paste(c(n," upper: ", upper.bound, " lower: ", lower.bound, " avg: ", avg, " stddev: ", stdev),collapse=""))
+        print(paste(c(n," upper: ", upper.bound, " lower: ", lower.bound, " avg: ", avg, " stddev: ", stddev),collapse=""))
       }
       # print("avg")
       # print(avg)
