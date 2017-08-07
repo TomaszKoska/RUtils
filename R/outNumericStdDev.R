@@ -1,4 +1,4 @@
-outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), maxRemovedPercentage= 0.01, cheatingMode=F){
+outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), maxRemovedPercentage= 0.01, cheatingMode=F,verbose=F){
 #usuwa wszystkie obserwacje dla których dowolna zmienna numeryczna przyjmuje wartość oddaloną o
 #zadaną liczbę odchyleń standardowych od średniej
 
@@ -28,8 +28,13 @@ outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), ma
       avg <- mean(df[,n])
       stddev <- sd(df[,n])
 
+
       upper.bound <- avg + stddev*howManyDevsAway
       lower.bound <- avg - stddev*howManyDevsAway
+
+      if(verbose){
+        print(paste(c(n," upper: ", upper.bound, " lower: ", lower.bound),collapse=""))
+      }
       # print("avg")
       # print(avg)
       # print("std")
