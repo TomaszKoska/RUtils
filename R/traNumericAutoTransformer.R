@@ -1,4 +1,4 @@
-traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), functionsToTest = c("log","exp","square"),verbose=F, cheatingMode=F, tolerance = 0.05){
+traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariables=c(), functionsToTest = c("log","exp","square"),verbose=F, cheatingMode=F, tolerance = 0.05,standardize=T){
   # choosenVariables - if null the function will transform all numeric variables
 
   if(class(fo) != "ForecastingObject"){
@@ -34,6 +34,9 @@ traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariab
   }
 
   for(n in choosenVariables){
+    if(standardize){
+      df[,n] <- (df[,n] - min(df[,n]))/(max(df[,n]) - min(df[,n]))
+    }
 
     baseCorrelation <- cor(df[,n],df[,fo$yName])
     bestFunctionForNow <- ""
