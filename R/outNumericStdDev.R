@@ -1,4 +1,4 @@
-outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), maxRemovedPercentage= 0.01, cheatingMode=F,verbose=F){
+outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), maxRemovedPercentage= 0.01, cheatingMode=F,verbose=F,ignoreZeros=F){
 #usuwa wszystkie obserwacje dla których dowolna zmienna numeryczna przyjmuje wartość oddaloną o
 #zadaną liczbę odchyleń standardowych od średniej
 
@@ -28,6 +28,10 @@ outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), ma
       avg <- mean(df[,n])
       stddev <- sd(df[,n])
 
+      if(ignoreZeros){
+        avg <- mean(df[df[,n]!=0,n])
+        stddev <- sd(df[df[,n]!=0,n])
+      }
 
       upper.bound <- avg + stddev*howManyDevsAway
       lower.bound <- avg - stddev*howManyDevsAway
@@ -35,15 +39,6 @@ outNumericStdDev <- function(fo, howManyDevsAway = 2, ignoredVariables = c(), ma
       if(verbose){
         print(paste(c(n," upper: ", upper.bound, " lower: ", lower.bound, " avg: ", avg, " stddev: ", stddev),collapse=""))
       }
-      # print("avg")
-      # print(avg)
-      # print("std")
-      # print(stddev)
-      # print("up")
-      # print(upper.bound)
-      # print("lo")
-      # print(lower.bound)
-      # print(fo$train[,n] )
       x<-sum(fo$train[,n] > upper.bound | fo$train[,n] < lower.bound )
       # print("x")
       # print(x)

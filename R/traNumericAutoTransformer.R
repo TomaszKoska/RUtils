@@ -35,6 +35,10 @@ traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariab
 
   for(n in choosenVariables){
     if(standardize){
+      if(verbose){
+        print(paste(c(n," min: ", min(df[,n]), " max: ", max(df[,n])),collapse=""))
+      }
+
       df[,n] <- (df[,n] - min(df[,n]))/(max(df[,n]) - min(df[,n]))
     }
 
@@ -61,6 +65,22 @@ traNumericAutoTransformer <- function(fo, choosenVariables=NULL, forbiddenVariab
       if(verbose){
         print(summary(df[,n]))
       }
+
+      if(standardize){
+       if(cheatingMode){
+         minToUse <- min(cheatDf[,n])
+         maxToUse <-max(cheatDf[,n])
+       }else{
+         minToUse <- min(fo$train[,n])
+         maxToUse <- max(fo$train[,n])
+       }
+
+        fo$train[,n] <- (fo$train[,n] - minToUse)/(maxToUse-minToUse)
+        fo$trainFull[,n] <- (fo$trainFull[,n] - minToUse)/(maxToUse-minToUse)
+        fo$forecast[,n] <- (fo$forecast[,n] - minToUse)/(maxToUse-minToUse)
+      }
+
+
 
       fo$train[,n] <- sapply(X=fo$train[,n],FUN = fun)
       fo$trainFull[,n] <- sapply(X=fo$trainFull[,n],FUN = fun)
